@@ -64,7 +64,7 @@ export default function ParticleSystem() {
 
   // Simple equilibrium check state
   const reactionHistory = useRef([]); // Store net reaction counts (-1 rev, +1 fwd)
-  const historyLength = 100; // Check over last 100 frames
+  const historyLength = 1000; // Check over last 1000 frames
 
   // --- Simulation Loop ---
   useFrame((state, delta) => {
