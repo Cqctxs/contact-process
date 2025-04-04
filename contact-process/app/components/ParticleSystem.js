@@ -20,18 +20,16 @@ const MIN_EQ_CHECK_FRAMES = 200;
 const REQUIRED_EQ_HISTORY_LEN = 100;
 const EQ_FLUCTUATION_THRESHOLD = 0.05;
 
-// TUNABLE: Increased base probability for faster reaction/equilibrium shift
-const BASE_REACTION_PROBABILITY = 0.04; // Experiment with this value (e.g., 0.03, 0.05, 0.08)
+// --- TUNABLES ---
+const BASE_REACTION_PROBABILITY = 0.04; // Base chance of reaction if conditions met
+const REACTION_SPAWN_OFFSET_SCALE = 0.3; // How far apart products spawn (increase from 0.1)
+const REACTION_VELOCITY_KICK_SCALE = 0.25; // How fast products fly apart (increase from 0.15)
+// ----------------
 
 export default function ParticleSystem() {
-  // Zustand state actions needed
-  // Zustand state and actions needed by this component
+  // Zustand state/actions
   const particles = useSimulationStore((state) => state.particles);
-  const isRunning = useSimulationStore((state) => state.isRunning);
-  // Direct state access inside useFrame is often better for performance critical loops
-  // const temperatureC = useSimulationStore((state) => state.temperatureC);
-  // const catalystActive = useSimulationStore((state) => state.catalystActive);
-  // const effectiveBoxSize = useSimulationStore((state) => state.effectiveBoxSize);
+  const isRunning = useSimulationStore((state) => state.isRunning); // Subscribe directly for effect
   const addParticle = useSimulationStore((state) => state.addParticle);
   const removeParticlesByIds = useSimulationStore(
     (state) => state.removeParticlesByIds
@@ -43,12 +41,11 @@ export default function ParticleSystem() {
   const updateCountsHistory = useSimulationStore(
     (state) => state.updateCountsHistory
   );
-  // We get isRunning inside the useEffect and useFrame for efficiency
 
   // Refs
   const meshRefs = useRef({});
   const frameCount = useRef(0);
-  const { invalidate } = useThree(); // R3F invalidate function
+  const { invalidate } = useThree();
 
   // Memoized THREE objects
   const sphereGeometry = useMemo(
@@ -76,7 +73,7 @@ export default function ParticleSystem() {
     []
   );
 
-  // Effect to clean up mesh refs and invalidate when particle array changes
+  // Effect: Cleanup mesh refs, invalidate on particle changes
   useEffect(() => {
     const currentParticleIds = new Set(particles.map((p) => p.id));
     Object.keys(meshRefs.current).forEach((idStr) => {
@@ -85,55 +82,49 @@ export default function ParticleSystem() {
         delete meshRefs.current[id];
       }
     });
-    invalidate(); // Invalidate if particles added/removed via sliders while paused
+    invalidate();
   }, [particles, invalidate]);
 
-  // Effect to manage frame count and invalidation based on running state
+  // Effect: Reset frame count, invalidate on isRunning change
   useEffect(() => {
     if (!isRunning) {
-      frameCount.current = 0; // Reset frame counter when paused/reset
+      frameCount.current = 0;
     } else {
-      // If simulation just started, request a frame immediately to kick off useFrame
       console.log("Simulation started, invalidating canvas.");
-      invalidate();
+      invalidate(); // Ensure render loop starts
     }
-  }, [isRunning, invalidate]);
+  }, [isRunning, invalidate]); // Depend directly on isRunning from store
 
   // --- Simulation Loop ---
   useFrame((state, delta) => {
-    // Get current running state directly for this frame check
     const running = useSimulationStore.getState().isRunning;
-
-    // If running, always request the next frame for continuous animation
     if (running) {
       invalidate();
     } else {
-      return; // Stop simulation processing if paused
-    }
+      return;
+    } // Keep invalidating if running
 
-    // Get particles directly for this frame
     const currentParticles = useSimulationStore.getState().particles;
     if (currentParticles.length === 0) return;
     frameCount.current++;
 
-    // Get other state values needed
+    // Get state needed for calculations
     const currentTempC = useSimulationStore.getState().temperatureC;
     const currentCatalystActive = useSimulationStore.getState().catalystActive;
     const currentEffectiveBoxSize =
       useSimulationStore.getState().effectiveBoxSize;
 
-    // --- Calculations ---
+    // Calculations
     const tempK = currentTempC + 273.15;
     const halfBox = currentEffectiveBoxSize / 2;
     const dt = Math.min(delta, 0.05);
 
-    // --- Rates ---
+    // Rates
     const speedFactor = Math.sqrt(tempK / TEMP_REF_K);
     const catalystMultiplier = currentCatalystActive ? CATALYST_FACTOR : 1.0;
-    const baseProbMultiplier = BASE_REACTION_PROBABILITY * catalystMultiplier; // Use the tunable constant
+    const baseProbMultiplier = BASE_REACTION_PROBABILITY * catalystMultiplier;
     const tempRateFactor = Math.max(0.1, tempK / TEMP_REF_K);
-    const equilibriumShiftFactor = Math.exp(-6 * (tempK / TEMP_REF_K - 1)); // Tune exponent (-6) if needed
-
+    const equilibriumShiftFactor = Math.exp(-6 * (tempK / TEMP_REF_K - 1));
     let forwardProb = Math.max(
       0,
       Math.min(1, baseProbMultiplier * tempRateFactor * equilibriumShiftFactor)
@@ -225,15 +216,16 @@ export default function ParticleSystem() {
                 so2_1.position,
                 so2_2.position,
               ]);
+              // Use reaction-specific spawn parameters
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO3,
-                pos: randomOffset(centerPos, 0.1),
-                vel: randomVelocity(0.15),
+                pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
+                vel: randomVelocity(REACTION_VELOCITY_KICK_SCALE),
               });
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO3,
-                pos: randomOffset(centerPos, 0.1),
-                vel: randomVelocity(0.15),
+                pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
+                vel: randomVelocity(REACTION_VELOCITY_KICK_SCALE),
               });
               potentialO2[i] = null;
               const idx1 = potentialSO2.findIndex((p) => p?.id === so2_1.id);
@@ -259,20 +251,21 @@ export default function ParticleSystem() {
               particlesToRemove.add(p1.id);
               particlesToRemove.add(p2.id);
               const centerPos = averagePosition([p1.position, p2.position]);
+              // Use reaction-specific spawn parameters
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO2,
-                pos: randomOffset(centerPos, 0.1),
-                vel: randomVelocity(0.15),
+                pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
+                vel: randomVelocity(REACTION_VELOCITY_KICK_SCALE),
               });
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO2,
-                pos: randomOffset(centerPos, 0.1),
-                vel: randomVelocity(0.15),
+                pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
+                vel: randomVelocity(REACTION_VELOCITY_KICK_SCALE),
               });
               particlesToAdd.push({
                 type: PARTICLE_TYPES.O2,
-                pos: randomOffset(centerPos, 0.1),
-                vel: randomVelocity(0.15),
+                pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
+                vel: randomVelocity(REACTION_VELOCITY_KICK_SCALE),
               });
               potentialSO3[i] = null;
               potentialSO3[j] = null;
