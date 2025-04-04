@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,6 +9,17 @@ export default function Home() {
         <h1 className="text-3xl font-bold tracking-tight">Equilibrium in Sulfuric Acid Production</h1>
         <p className="mt-2 text-gray-400 font-light">Understanding the Chemical Principles Behind Industrial Production</p>
       </header>
+
+      <nav className="bg-gray-800/90 p-4 text-center sticky top-0 z-10 shadow-lg backdrop-blur-sm">
+        <div className="flex justify-center space-x-2 md:space-x-6">
+          <Link href="/" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
+            Home
+          </Link>
+          <Link href="/simulation" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
+            Simulation
+          </Link>
+        </div>
+      </nav>
 
       {/* Main Content */}
       <main className="w-11/12 md:w-4/5 mx-auto p-4 md:p-6 mt-6 mb-12 space-y-12">
@@ -32,24 +44,24 @@ export default function Home() {
         <section id="equilibrium" className="group">
           <div className="bg-gray-800/80 hover:bg-gray-800/90 transition-all p-6 rounded-2xl shadow-lg border border-gray-700">
             <div className="space-y-6">
-              
+
               <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
-                The Role of Equilibrium
+                  The Role of Equilibrium
                 </h3>
 
                 <div className="space-y-5">
                   <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
                     <h4 className="font-semibold text-gray-200 mb-2">Temperature Effects</h4>
                     <p className="text-gray-400">
-                    Sulphuric acid is produced in two steps, the first of which is a reaction where sulphur dioxide and oxygen gas are used to synthesize sulphur trioxide. With the synthesis of sulfur trioxide, water can easily be added to create sulfuric acid. In this reaction, the rate limiting step is the first, where sulphur dioxide and oxygen gas react to form sulphur trioxide.
+                      Sulphuric acid is produced in two steps, the first of which is a reaction where sulphur dioxide and oxygen gas are used to synthesize sulphur trioxide. With the synthesis of sulfur trioxide, water can easily be added to create sulfuric acid. In this reaction, the rate limiting step is the first, where sulphur dioxide and oxygen gas react to form sulphur trioxide.
                     </p>
                   </div>
 
                   <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
                     <h4 className="font-semibold text-gray-200 mb-2">Pressure Considerations</h4>
                     <p className="text-gray-400">
-                    Just like how in the Haber process, ammonia tends to split into nitrogen gas and hydrogen gas, sulphuric acid also doesn't tend to be easily synthesized. The rate limiting step we've mentioned is called the Contact Process. Similar to the Haber process, the dynamic equilibrium of the reaction is the determining factor of how efficiently the reaction can proceed. The conditions must be optimized to maximize yield while maintaining efficiency.
+                      Just like how in the Haber process, ammonia tends to split into nitrogen gas and hydrogen gas, sulphuric acid also doesn't tend to be easily synthesized. The rate limiting step we've mentioned is called the Contact Process. Similar to the Haber process, the dynamic equilibrium of the reaction is the determining factor of how efficiently the reaction can proceed. The conditions must be optimized to maximize yield while maintaining efficiency.
                     </p>
                   </div>
                 </div>
@@ -57,7 +69,11 @@ export default function Home() {
 
               {/* Image Placeholder */}
               <div className="w-full h-64 bg-gray-900 flex items-center justify-center rounded-xl border border-gray-700">
-                <span className="text-gray-500">Reaction Diagram Placeholder</span>
+                <Image src="/Images/equation.jpg"
+                  alt="Chemical equilibrium equations"   // Required alt text
+                  width={600}                           // Required width in pixels
+                  height={400}                          // Required height in pixels
+                />
               </div>
 
               {/* Le Châtelier's Principle Section */}
@@ -101,11 +117,6 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
-
-            {/* Catalyst Diagram Placeholder */}
-            <div className="w-full h-64 bg-gray-900 flex items-center justify-center rounded-xl border border-gray-700">
-              <span className="text-gray-500">Catalyst Diagram Placeholder</span>
             </div>
           </div>
         </section>

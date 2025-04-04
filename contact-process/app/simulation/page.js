@@ -5,6 +5,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import Controls from "../components/Controls"; // Correct relative path
 import { useSimulationStore } from "../components/simulationStore"; // Correct relative path
+import Link from "next/link";
 
 // Dynamically import the SimulationCanvas to avoid SSR issues
 const SimulationCanvas = dynamic(
@@ -48,6 +49,16 @@ export default function SimulationPage() {
           content="Chemical equilibrium simulation using Next.js, Tailwind, and Three.js (JavaScript version)"
         />
       </Head>
+      <nav className="bg-gray-800/90 p-4 text-center sticky top-0 z-10 shadow-lg backdrop-blur-sm">
+        <div className="flex justify-center space-x-2 md:space-x-6">
+          <Link href="/" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
+            Home
+          </Link>
+          <Link href="/simulation" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
+            Simulation
+          </Link>
+        </div>
+      </nav>
 
       {/* Main layout using Flexbox */}
       <main className="flex flex-col md:flex-row h-screen bg-gray-200 overflow-hidden">
