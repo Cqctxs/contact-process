@@ -15,9 +15,6 @@ export default function Home() {
           <Link href="/" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
             Home
           </Link>
-          <Link href="/references" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
-            References
-          </Link>
           <Link href="/simulation" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
             Simulation
           </Link>
