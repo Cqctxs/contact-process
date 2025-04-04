@@ -1,50 +1,110 @@
 // components/SimulationCanvas.jsx
 "use client";
 
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Box, Stats } from "@react-three/drei";
-import ParticleSystem from "./ParticleSystem"; // Use .jsx
-import { BOX_SIZE } from "./simulationStore"; // Use .js
+import ParticleSystem from "./ParticleSystem";
+import { useSimulationStore } from "./simulationStore";
 
-export default function SimulationCanvas() {
+// Inner component to access useThree easily and manage canvas-specific effects
+function CanvasContent() {
+  const effectiveBoxSize = useSimulationStore(
+    (state) => state.effectiveBoxSize
+  );
+  const { invalidate } = useThree(); // Get invalidate function from R3F
+
+  // Effect to invalidate (force re-render) canvas when box size changes
+  useEffect(() => {
+    console.log(
+      "Effective box size changed to:",
+      effectiveBoxSize,
+      "Invalidating canvas."
+    );
+    invalidate();
+  }, [effectiveBoxSize, invalidate]);
+
   return (
-    <div className="w-full h-full bg-gray-800">
-      {" "}
-      {/* Ensure container takes space */}
-      <Canvas
-        camera={{ position: [0, 0, BOX_SIZE * 1.5], fov: 50 }}
-        frameloop="demand" // Only render when state changes or useFrame runs
+    <>
+      {/* Lighting setup */}
+      <ambientLight intensity={0.4} />
+      <directionalLight
+        position={[
+          effectiveBoxSize * 0.8,
+          effectiveBoxSize * 0.8,
+          effectiveBoxSize * 0.8,
+        ]}
+        intensity={1.2}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-far={effectiveBoxSize * 3}
+        shadow-camera-left={-effectiveBoxSize * 1.2}
+        shadow-camera-right={effectiveBoxSize * 1.2}
+        shadow-camera-top={effectiveBoxSize * 1.2}
+        shadow-camera-bottom={-effectiveBoxSize * 1.2}
+      />
+      <pointLight
+        position={[-effectiveBoxSize, -effectiveBoxSize, -effectiveBoxSize]}
+        intensity={0.3}
+      />
+
+      {/* Camera Controls */}
+      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+
+      {/* Visual Simulation Box Outline */}
+      <Box
+        args={[effectiveBoxSize, effectiveBoxSize, effectiveBoxSize]}
+        position={[0, 0, 0]}
+        receiveShadow
       >
-        {/* Lighting */}
-        <ambientLight intensity={0.6} />
-        <pointLight position={[BOX_SIZE, BOX_SIZE, BOX_SIZE]} intensity={1} />
-        <pointLight
-          position={[-BOX_SIZE, -BOX_SIZE, -BOX_SIZE]}
-          intensity={0.5}
+        <meshStandardMaterial
+          wireframe
+          color="gray"
+          transparent
+          opacity={0.2}
         />
+      </Box>
 
-        {/* Controls */}
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+      {/* Ground plane */}
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -effectiveBoxSize / 2 - 0.1, 0]}
+        receiveShadow
+      >
+        <planeGeometry
+          args={[effectiveBoxSize * 1.5, effectiveBoxSize * 1.5]}
+        />
+        <shadowMaterial opacity={0.3} />
+      </mesh>
 
-        {/* Simulation Box Outline (Optional) */}
-        <Box args={[BOX_SIZE, BOX_SIZE, BOX_SIZE]} position={[0, 0, 0]}>
-          <meshStandardMaterial
-            wireframe
-            color="gray"
-            transparent
-            opacity={0.3}
-          />
-        </Box>
+      {/* Particle System Component */}
+      <Suspense fallback={null}>
+        <ParticleSystem />
+      </Suspense>
+    </>
+  );
+}
 
-        {/* Particle System */}
-        <Suspense fallback={null}>
-          <ParticleSystem />
-        </Suspense>
+// Main export component setting up the Canvas
+export default function SimulationCanvas() {
+  const initialBoxSize = useSimulationStore.getState().effectiveBoxSize;
 
-        {/* Performance Stats (Optional) */}
-        <Stats />
+  return (
+    <div className="w-full h-full bg-gray-800 relative">
+      <Canvas
+        camera={{
+          position: [0, 0, Math.max(15, initialBoxSize * 1.7)],
+          fov: 50,
+        }}
+        frameloop="demand"
+        shadows
+      >
+        <CanvasContent />
       </Canvas>
+      <div className="absolute bottom-2 left-2">
+        <Stats />
+      </div>
     </div>
   );
 }
