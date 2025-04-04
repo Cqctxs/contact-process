@@ -38,14 +38,14 @@ export default function Controls() {
   };
 
   return (
-    <div className="p-4 bg-gray-100 rounded shadow space-y-4 min-w-[300px]">
+    <div className="p-4 bg-gray-800/80 hover:bg-gray-800/90 rounded-2xl shadow space-y-4 min-w-[300px]">
       <h2 className="text-xl font-semibold mb-4">Simulation Controls</h2>
 
       {/* Initial Amount Sliders */}
       <div className="space-y-2">
         <label
           htmlFor="so2-slider"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-300"
         >
           Initial SO₂ Amount: {initialSO2}
         </label>
@@ -67,7 +67,7 @@ export default function Controls() {
       <div className="space-y-2">
         <label
           htmlFor="o2-slider"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-300"
         >
           Initial O₂ Amount: {initialO2}
         </label>
@@ -86,7 +86,7 @@ export default function Controls() {
       <div className="space-y-2">
         <label
           htmlFor="so3-slider"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-300"
         >
           Initial SO₃ Amount: {initialSO3}
         </label>
@@ -107,7 +107,7 @@ export default function Controls() {
       <div className="space-y-2">
         <label
           htmlFor="temp-slider"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-300"
         >
           Temperature (°C): {temperatureC}
         </label>
@@ -131,7 +131,7 @@ export default function Controls() {
       <div className="space-y-2">
         <label
           htmlFor="pressure-slider"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-300"
         >
           Pressure Factor: {pressureFactor.toFixed(1)}x
         </label>
@@ -161,7 +161,7 @@ export default function Controls() {
         />
         <label
           htmlFor="catalyst-checkbox"
-          className="text-sm font-medium text-gray-700"
+          className="text-sm font-medium text-gray-300"
         >
           Use Catalyst (V₂O₅)
         </label>
@@ -191,7 +191,7 @@ export default function Controls() {
       </div>
 
       {/* Display Current Particle Counts */}
-      <div className="mt-4 p-3 bg-white rounded border border-gray-200">
+      <div className="mt-4 p-3 bg-gray-700/80 hover:bg-gray-700/90 rounded">
         <h3 className="font-semibold mb-2">Current Particle Counts:</h3>
         <p>
           <span className="inline-block w-3 h-3 rounded-full bg-[#FFFF00] mr-1"></span>{" "}
