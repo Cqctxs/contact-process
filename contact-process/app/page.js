@@ -9,21 +9,6 @@ export default function Home() {
         <p className="mt-2 text-gray-400 font-light">Understanding the Chemical Principles Behind Industrial Production</p>
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-gray-800/90 p-4 text-center sticky top-0 z-10 shadow-lg backdrop-blur-sm">
-        <div className="flex justify-center space-x-2 md:space-x-6">
-          <a href="#introduction" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
-            Introduction
-          </a>
-          <a href="#equilibrium" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
-            Equilibrium
-          </a>
-          <a href="#contact" className="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-700 text-sm md:text-base font-medium">
-            Contact
-          </a>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <main className="w-11/12 md:w-4/5 mx-auto p-4 md:p-6 mt-6 mb-12 space-y-12">
         {/* Introduction Section */}
