@@ -69,7 +69,11 @@ export default function Home() {
 
               {/* Image Placeholder */}
               <div className="w-full h-64 bg-gray-900 flex items-center justify-center rounded-xl border border-gray-700">
-                <span className="text-gray-500">Reaction Diagram Placeholder</span>
+                <Image src="/Images/equation.jpg"
+                  alt="Chemical equilibrium equations"   // Required alt text
+                  width={600}                           // Required width in pixels
+                  height={400}                          // Required height in pixels
+                />
               </div>
 
               {/* Le Châtelier's Principle Section */}
@@ -113,32 +117,6 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-                <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
-                  <p className="text-gray-300 leading-relaxed">
-
-                    Want to see for yourself how this all works? Check out a <a href="./simulation" target="_blank" rel="noreferrer">simulation of the reaction</a>!
-                  </p>
-                </div>
-              </div>
-              <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-                <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
-                  References
-                </h3>
-                <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
-
-                  <p className="text-gray-300 leading-relaxed">
-                    
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* Catalyst Diagram Placeholder */}
-            <div className="w-full h-64 bg-gray-900 flex items-center justify-center rounded-xl border border-gray-700">
-              <span className="text-gray-500">Catalyst Diagram Placeholder</span>
             </div>
           </div>
         </section>
