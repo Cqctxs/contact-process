@@ -124,33 +124,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="group">
-          <div className="bg-gray-800/80 hover:bg-gray-800/90 transition-all p-6 rounded-2xl shadow-lg border border-gray-700">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-100 mb-4 tracking-tight">
-              Contact
-            </h2>
-            <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-              <p className="text-gray-300">
-                For more information about sulfuric acid production and equilibrium principles, please contact us at:
-              </p>
-              <div className="mt-4 space-y-2">
-                <p className="text-gray-200 font-medium">
-                  Email: <span className="text-blue-400">info@sulfuric-acid-chem.com</span>
-                </p>
-                <p className="text-gray-200 font-medium">
-                  Phone: <span className="text-blue-400">(555) 123-4567</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
-
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-400 text-center p-4 text-sm">
-        <p>© {new Date().getFullYear()} Sulfuric Acid Production Education</p>
+        <p> hi sena zhao</p>
       </footer>
     </div >
   );
