@@ -11,9 +11,6 @@ import { BlockMath } from "react-katex"; // <-- Add this import
 export default function Home() {
   // Define the LaTeX string for the equation
   // Note the double backslashes needed for JavaScript strings
-  const contactProcessEquation =
-    "2SO_2(\\text{g}) + O_2(\\text{g}) \\rightleftharpoons 2SO_3(\\text{g}) \\quad \\Delta H = -196 \\text{ kJ/mol}";
-
   return (
     <div className="min-h-screen bg-gray-900 font-sans">
       {/* Header */}
@@ -79,8 +76,18 @@ export default function Home() {
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
                   Production of Sulfuric Acid
                 </h3>
-                {/* --- Modified Section --- */}
                 <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
+                  <p className="text-gray-300 leading-relaxed">
+                    First step production of sulfur dioxide (SO₂) from the
+                    combustion of sulfur, not reversible
+                  </p>
+                  <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
+                    <BlockMath
+                      math={
+                        "S_{(\\text{l})} + O_{2(\\text{g})} \\rightarrow SO_{2(\\text{g})}"
+                      }
+                    />
+                  </div>
                   <p className="text-gray-300 leading-relaxed">
                     The key step in the industrial production of sulfuric acid
                     is the Contact Process, specifically the reversible
@@ -89,10 +96,12 @@ export default function Home() {
                     equilibrium is:
                   </p>
                   {/* Add the BlockMath component here */}
-                  <div className="my-4 text-center text-lg text-cyan-300 bg-gray-900/50 py-3 rounded-md">
-                    {" "}
-                    {/* Added container for styling */}
-                    <BlockMath math={contactProcessEquation} />
+                  <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
+                    <BlockMath
+                      math={
+                        "2SO_{2(\\text{g})} + O_{2(\\text{g})} \\rightleftharpoons 2SO_{3(\\text{g})} + 196 \\text{ kJ/mol}"
+                      }
+                    />
                   </div>
                   <p className="text-gray-300 leading-relaxed mt-2">
                     This reaction is exothermic (releases heat) and involves a
@@ -102,6 +111,33 @@ export default function Home() {
                     sulfuric acid to form oleum, which is finally diluted with
                     water to produce more sulfuric acid.
                   </p>
+                  <p className="text-gray-300 leading-relaxed mt-2">
+                    Final stage making sulfuric acid
+                  </p>
+                  <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
+                    <BlockMath
+                      math={
+                        "H_2O_{(\\text{l})} + SO_{3(\\text{g})} \\rightarrow H_2SO_{4(\\text{aq})}"
+                      }
+                    />
+                  </div>
+                  <p className="text-gray-300 leading-relaxed mt-2">
+                    However this reaction is highly exothermic and leads to the
+                    formation of clouds of sulfuric acid. This is highly
+                    dangerous. Reacted to form oleum
+                  </p>
+                  <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
+                    <BlockMath
+                      math={
+                        "SO_{3(\\text{g})} + H_2SO_{4(\\text{l})} \\rightarrow H_2S_2O_{7(\\text{l})}"
+                      }
+                    />
+                    <BlockMath
+                      math={
+                        "H_2S_2O_{7(\\text{l})} + H_2O_{(\\text{l})} \\rightarrow H_2SO_{4(\\text{l})}"
+                      }
+                    />
+                  </div>
                 </div>
                 {/* --- End Modified Section --- */}
               </div>
