@@ -61,7 +61,7 @@ export default function SimulationPage() {
       </nav>
 
       {/* Main layout using Flexbox */}
-      <main className="flex flex-col md:flex-row h-screen bg-gray-200 overflow-hidden">
+      <main className="flex flex-col md:flex-row h-screen bg-gray-700 overflow-hidden">
         {" "}
         {/* Prevent scrolling on main */}
         {/* Controls Panel */}
