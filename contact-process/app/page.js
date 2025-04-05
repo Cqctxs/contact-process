@@ -1,12 +1,9 @@
-// app/page.js (or .jsx)
-
-// Make sure you have this import if not in layout.js:
-// import 'katex/dist/katex.min.css';
+// app/page.js 
 
 import Image from "next/image";
 import Link from "next/link";
 // Import the BlockMath component from react-katex
-import { BlockMath } from "react-katex"; // <-- Add this import
+import { BlockMath } from "react-katex";
 
 export default function Home() {
   // Define the LaTeX string for the equation
@@ -53,7 +50,7 @@ export default function Home() {
             <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
               <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
                 <p className="text-gray-300 leading-relaxed">
-                  Sulfuric acid is the world's largest volume industrial
+                  Sulfuric acid is the world&apos;s largest volume industrial
                   chemical, used in everything from making fertilizers to
                   producing steel and refining petroleum. Its production relies
                   heavily on chemical equilibrium principles to ensure
@@ -62,7 +59,7 @@ export default function Home() {
                 <p className="text-gray-300 leading-relaxed mt-4">
                   Its production nears the highest of any chemical in the world,
                   totalling over 200 million tons a year! So how do we keep up
-                  with the production? It's all in the equilibrium!
+                  with the production? It&apos;s all in the equilibrium!
                 </p>
               </div>
             </div>
@@ -185,7 +182,7 @@ export default function Home() {
                     </h4>
                     <p className="text-gray-300">
                       Like the Haber process for ammonia, the Contact Process
-                      doesn't naturally proceed with high yield under simple
+                      doesn&apos;t naturally proceed with high yield under simple
                       conditions. The dynamic equilibrium must be carefully
                       managed by optimizing temperature, pressure, and reactant
                       concentrations to maximize yield efficiently and
@@ -195,10 +192,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Le Châtelier's Principle Section */}
+              {/* Le Châtelier&apos;s Principle Section */}
               <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
-                  How Equilibrium Affects the Process: Le Châtelier's Principle
+                  How Equilibrium Affects the Process: Le Châtelier&apos;s Principle
                 </h3>
                 <div className="space-y-5">
                   <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
@@ -207,7 +204,7 @@ export default function Home() {
                     </h4>
                     <p className="text-gray-300">
                       The forward reaction (SO₃ formation) is exothermic (ΔH is
-                      negative). Le Châtelier's principle predicts that lower
+                      negative). Le Châtelier&apos;s principle predicts that lower
                       temperatures favor the product side. However, reaction
                       rates decrease significantly at low temperatures.
                       Therefore, a compromise temperature of 400-450°C is
@@ -268,7 +265,7 @@ export default function Home() {
               conditions of the reaction affect the equilibrium! Play around
               with the sliders and check out various views of the reaction. Drag
               the canvas to orbit around, and scroll to zoom in and out. Note
-              that the simulation is mostly qualitative, and doesn't fully
+              that the simulation is mostly qualitative, and doesn&apos;t fully
               represent the real-world equilibrium conditions (approx Keq and
               rates).
             </p>
