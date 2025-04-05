@@ -81,8 +81,8 @@ export default function Home() {
                 <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
                   <p className="text-gray-300 leading-relaxed">
                     The first step to the production of sulfuric acid is to
-                    create the sulphur dioxide (SO₂) from the sulfur (S) and
-                    oxygen (O) gases. Sulphur is a common chemical, produced
+                    create the sulfur dioxide (SO₂) from the sulfur (S) and
+                    oxygen (O) gases. Sulfur is a common chemical, produced
                     from a variety of other industrial processes as a waste
                     product. Oxygen is just as common and can be produced from
                     many sources. Together, they are the building blocks of the
@@ -98,8 +98,8 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-gray-300 leading-relaxed">
-                    Now, using the sulphur dioxide previously synthesized, it
-                    can be reacted with additional oxygen gas to produce sulphur
+                    Now, using the sulfur dioxide previously synthesized, it
+                    can be reacted with additional oxygen gas to produce sulfur
                     trioxide (SO₃). This step is also known as the Contact
                     Process, and is a very important step in the production,
                     since unlike the first step, this step is reversible, so
@@ -124,7 +124,7 @@ export default function Home() {
                   </p>
                   <p className="text-gray-300 leading-relaxed mt-2">
                     The final step of the reaction is the process of reacting
-                    water with the sulphur trioxide to produce sulfuric acid.
+                    water with the sulfur trioxide to produce sulfuric acid.
                     This reaction has an extremely high rate of reaction and is
                     very exothermic, releasing an extreme amount of energy. Due
                     to this, the reaction ends up being highly dangerous.
