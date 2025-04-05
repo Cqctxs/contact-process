@@ -16,20 +16,24 @@ const REACTION_DISTANCE_FWD_SQ = 0.8 ** 2;
 const REACTION_DISTANCE_REV_SQ = 0.6 ** 2;
 const TEMP_REF_K = 450.0 + 273.15;
 const CATALYST_FACTOR = 10.0;
-const MIN_EQ_CHECK_FRAMES = 200;
-const REQUIRED_EQ_HISTORY_LEN = 100;
-const EQ_FLUCTUATION_THRESHOLD = 0.05;
 
-// --- TUNABLES ---
+// --- Equilibrium Check TUNABLES ---
+const MIN_EQ_CHECK_FRAMES = 250; // Increased: Wait longer before starting checks
+const REQUIRED_EQ_HISTORY_LEN = 300; // Check stability over this many frames (Keep at 300)
+const EQ_REL_FLUCTUATION_THRESHOLD = 0.25; // Allow 25% relative fluctuation (Increased further)
+const EQ_ABS_STDDEV_THRESHOLD = 15.0; // Allow stability if absolute std dev is below this (Increased significantly)
+// ----------------------------------
+
+// --- Reaction Dynamics TUNABLES ---
 const BASE_REACTION_PROBABILITY = 0.04; // Base chance of reaction if conditions met
-const REACTION_SPAWN_OFFSET_SCALE = 0.3; // How far apart products spawn (increase from 0.1)
-const REACTION_VELOCITY_KICK_SCALE = 0.25; // How fast products fly apart (increase from 0.15)
-// ----------------
+const REACTION_SPAWN_OFFSET_SCALE = 0.3; // How far apart products spawn
+const REACTION_VELOCITY_KICK_SCALE = 0.25; // How fast products fly apart
+// ----------------------------------
 
 export default function ParticleSystem() {
   // Zustand state/actions
   const particles = useSimulationStore((state) => state.particles);
-  const isRunning = useSimulationStore((state) => state.isRunning); // Subscribe directly for effect
+  const isRunning = useSimulationStore((state) => state.isRunning); // Subscribe for effect
   const addParticle = useSimulationStore((state) => state.addParticle);
   const removeParticlesByIds = useSimulationStore(
     (state) => state.removeParticlesByIds
@@ -91,9 +95,9 @@ export default function ParticleSystem() {
       frameCount.current = 0;
     } else {
       console.log("Simulation started, invalidating canvas.");
-      invalidate(); // Ensure render loop starts
+      invalidate();
     }
-  }, [isRunning, invalidate]); // Depend directly on isRunning from store
+  }, [isRunning, invalidate]);
 
   // --- Simulation Loop ---
   useFrame((state, delta) => {
@@ -102,24 +106,21 @@ export default function ParticleSystem() {
       invalidate();
     } else {
       return;
-    } // Keep invalidating if running
+    }
 
     const currentParticles = useSimulationStore.getState().particles;
     if (currentParticles.length === 0) return;
     frameCount.current++;
 
-    // Get state needed for calculations
     const currentTempC = useSimulationStore.getState().temperatureC;
     const currentCatalystActive = useSimulationStore.getState().catalystActive;
     const currentEffectiveBoxSize =
       useSimulationStore.getState().effectiveBoxSize;
 
-    // Calculations
     const tempK = currentTempC + 273.15;
     const halfBox = currentEffectiveBoxSize / 2;
     const dt = Math.min(delta, 0.05);
 
-    // Rates
     const speedFactor = Math.sqrt(tempK / TEMP_REF_K);
     const catalystMultiplier = currentCatalystActive ? CATALYST_FACTOR : 1.0;
     const baseProbMultiplier = BASE_REACTION_PROBABILITY * catalystMultiplier;
@@ -216,7 +217,6 @@ export default function ParticleSystem() {
                 so2_1.position,
                 so2_2.position,
               ]);
-              // Use reaction-specific spawn parameters
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO3,
                 pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
@@ -251,7 +251,6 @@ export default function ParticleSystem() {
               particlesToRemove.add(p1.id);
               particlesToRemove.add(p2.id);
               const centerPos = averagePosition([p1.position, p2.position]);
-              // Use reaction-specific spawn parameters
               particlesToAdd.push({
                 type: PARTICLE_TYPES.SO2,
                 pos: randomOffset(centerPos, REACTION_SPAWN_OFFSET_SCALE),
@@ -284,7 +283,7 @@ export default function ParticleSystem() {
       particlesToAdd.forEach((p) => addParticle(p.type, p.pos, p.vel));
     }
 
-    // --- 4. Equilibrium Check ---
+    // --- 4. Equilibrium Check (Further Improved Thresholds) ---
     if (frameCount.current > MIN_EQ_CHECK_FRAMES) {
       const finalParticles = useSimulationStore.getState().particles;
       const currentCounts = finalParticles.reduce(
@@ -294,34 +293,53 @@ export default function ParticleSystem() {
         },
         { SO2: 0, O2: 0, SO3: 0 }
       );
-      updateCountsHistory(currentCounts);
-      const history = useSimulationStore.getState().countsHistory;
+      updateCountsHistory(currentCounts); // Add latest counts
+      const history = useSimulationStore.getState().countsHistory; // Get full history
+
+      // Check history length (make sure store updates didn't shorten it unexpectedly)
       if (history.length >= REQUIRED_EQ_HISTORY_LEN) {
         let isStable = true;
+        const recentHistory = history.slice(-REQUIRED_EQ_HISTORY_LEN); // Use exactly the required length
+
         for (const type of Object.values(PARTICLE_TYPES)) {
-          const countsForType = history
-            .slice(-REQUIRED_EQ_HISTORY_LEN)
-            .map((h) => h[type] || 0);
+          const countsForType = recentHistory.map((h) => h[type] || 0);
           const avgCount =
             countsForType.reduce((a, b) => a + b, 0) / REQUIRED_EQ_HISTORY_LEN;
-          if (avgCount === 0) continue;
+
+          if (avgCount === 0) continue; // Skip if average is zero
+
           const stdDev = Math.sqrt(
             countsForType.reduce(
               (sumSq, count) => sumSq + (count - avgCount) ** 2,
               0
             ) / REQUIRED_EQ_HISTORY_LEN
           );
-          if (stdDev / avgCount > EQ_FLUCTUATION_THRESHOLD) {
+          const relativeChange = stdDev / avgCount;
+
+          // Log values for debugging if needed
+          // if (frameCount.current % 60 === 0) { // Log occasionally
+          //   console.log(`EQ Check - Type: ${type}, Avg: ${avgCount.toFixed(1)}, StdDev: ${stdDev.toFixed(2)}, RelChg: ${relativeChange.toFixed(3)}`);
+          // }
+
+          // Check BOTH thresholds: Instability requires significant relative AND absolute fluctuation
+          if (
+            relativeChange > EQ_REL_FLUCTUATION_THRESHOLD &&
+            stdDev > EQ_ABS_STDDEV_THRESHOLD
+          ) {
             isStable = false;
+            // if (frameCount.current % 60 === 0) { console.log(`  -> INSTABILITY DETECTED for ${type}`); }
             break;
           }
         }
+        // if (frameCount.current % 60 === 0) { console.log(`--- Stability Decision: ${isStable} ---`); }
         setEquilibriumReached(isStable);
       } else {
-        setEquilibriumReached(false);
+        // if (frameCount.current % 60 === 0) { console.log(` History not long enough (${history.length}/${REQUIRED_EQ_HISTORY_LEN})`); }
+        setEquilibriumReached(false); // Not enough history yet
       }
     } else {
-      setEquilibriumReached(false);
+      // if (frameCount.current % 60 === 0) { console.log(` Min frames not reached (${frameCount.current}/${MIN_EQ_CHECK_FRAMES})`); }
+      setEquilibriumReached(false); // Simulation hasn't run long enough
     }
   }); // End useFrame
 

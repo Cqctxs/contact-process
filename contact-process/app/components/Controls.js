@@ -205,11 +205,6 @@ export default function Controls() {
           <span className="inline-block w-3 h-3 rounded-full bg-[#0000FF] mr-1"></span>{" "}
           SO₃: {counts[PARTICLE_TYPES.SO3] || 0}
         </p>
-        {equilibriumReached && (
-          <p className="text-green-600 font-bold mt-2">
-            Equilibrium Reached (Approx.)
-          </p>
-        )}
       </div>
     </div>
   );
