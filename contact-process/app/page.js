@@ -51,18 +51,20 @@ export default function Home() {
               Sulfuric Acid - The King of Chemicals!
             </h2>
             <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-              <p className="text-gray-300 leading-relaxed">
-                Sulfuric acid is the world's largest volume industrial chemical,
-                used in everything from making fertilizers to producing steel
-                and refining petroleum. Its production relies heavily on
-                chemical equilibrium principles to ensure efficiency and high
-                yields.
-              </p>
-              <p className="text-gray-300 leading-relaxed mt-4">
-                Its production nears the highest of any chemical in the world,
-                totalling over 200 million tons a year! So how do we keep up
-                with the production? It's all in the equilibrium!!
-              </p>
+              <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
+                <p className="text-gray-300 leading-relaxed">
+                  Sulfuric acid is the world's largest volume industrial
+                  chemical, used in everything from making fertilizers to
+                  producing steel and refining petroleum. Its production relies
+                  heavily on chemical equilibrium principles to ensure
+                  efficiency and high yields.
+                </p>
+                <p className="text-gray-300 leading-relaxed mt-4">
+                  Its production nears the highest of any chemical in the world,
+                  totalling over 200 million tons a year! So how do we keep up
+                  with the production? It's all in the equilibrium!
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -102,10 +104,20 @@ export default function Home() {
                     This reaction is exothermic (releases heat) and involves a
                     decrease in the number of gas moles. Understanding how to
                     manipulate this equilibrium is vital for maximizing SO₃
-                    production. How the optimal industrial conditions were chosen will be further discussed in the next section. 
+                    production. How the optimal industrial conditions were
+                    chosen will be further discussed in the next section.
                   </p>
                   <p className="text-gray-300 leading-relaxed mt-2">
-                    The final step of the reaction is the process of reacting water with the sulphur trioxide to produce sulfuric acid. This reaction has an extremely high rate of reaction and is also exothermic. This makes this reaction spontaneous, and complete on its own. In fact, this reaction is so reactive that the sulphur trioxide must be first dissolved into sulphuric acid to produce a solution called oleum. Then, water can be added to produce a much more controllable reaction. The balanced chemical equation for this equilibrium is:
+                    The final step of the reaction is the process of reacting
+                    water with the sulphur trioxide to produce sulfuric acid.
+                    This reaction has an extremely high rate of reaction and is
+                    also exothermic. This makes this reaction spontaneous, and
+                    complete on its own. In fact, this reaction is so reactive
+                    that the sulphur trioxide must be first dissolved into
+                    sulphuric acid to produce a solution called oleum. Then,
+                    water can be added to produce a much more controllable
+                    reaction. The balanced chemical equation for this
+                    equilibrium is:
                   </p>
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
                     <BlockMath
@@ -127,7 +139,7 @@ export default function Home() {
                     <h4 className="font-semibold text-gray-200 mb-2">
                       Rate-Limiting Step
                     </h4>
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       Sulfuric acid is produced in multiple steps. The synthesis
                       of sulfur trioxide from sulfur dioxide and oxygen gas is
                       the critical, rate-limiting equilibrium step that
@@ -140,7 +152,7 @@ export default function Home() {
                     <h4 className="font-semibold text-gray-200 mb-2">
                       Optimizing Conditions
                     </h4>
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       Like the Haber process for ammonia, the Contact Process
                       doesn't naturally proceed with high yield under simple
                       conditions. The dynamic equilibrium must be carefully
@@ -163,7 +175,7 @@ export default function Home() {
                     <h4 className="font-semibold text-gray-200 mb-2">
                       Temperature Effects
                     </h4>
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       The forward reaction (SO₃ formation) is exothermic (ΔH is
                       negative). Le Châtelier's principle predicts that lower
                       temperatures favor the product side. However, reaction
@@ -177,7 +189,7 @@ export default function Home() {
                     <h4 className="font-semibold text-gray-200 mb-2">
                       Pressure Considerations
                     </h4>
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       The forward reaction converts 3 moles of gas (2 SO₂ + 1
                       O₂) into 2 moles of gas (2 SO₃). Increasing the pressure
                       shifts the equilibrium toward the side with fewer moles
@@ -191,7 +203,7 @@ export default function Home() {
                     <h4 className="font-semibold text-gray-200 mb-2">
                       Concentration Factors
                     </h4>
-                    <p className="text-gray-400">
+                    <p className="text-gray-300">
                       Increasing the concentration of reactants (SO₂ or O₂)
                       shifts the equilibrium to the right, increasing SO₃ yield.
                       Since oxygen (from air) is relatively inexpensive, an
