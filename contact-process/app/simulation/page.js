@@ -62,17 +62,14 @@ export default function SimulationPage() {
 
       {/* Main layout using Flexbox */}
       <main className="flex flex-col md:flex-row h-screen bg-gray-700 overflow-hidden">
-        {" "}
         {/* Prevent scrolling on main */}
         {/* Controls Panel */}
         <div className="w-full md:w-auto md:min-w-[320px] p-4 overflow-y-auto shrink-0">
-          {" "}
           {/* Allow controls to scroll if needed */}
           <Controls />
         </div>
         {/* Simulation Canvas - Takes remaining space */}
         <div className="flex-grow h-[60vh] md:h-full">
-          {" "}
           {/* Ensure canvas container fills space */}
           <SimulationCanvas />
         </div>

@@ -60,9 +60,9 @@ function CanvasContent() {
       >
         <meshStandardMaterial
           wireframe
-          color="gray"
+          color="white"
           transparent
-          opacity={0.2}
+          opacity={0.5}
         />
       </Box>
 

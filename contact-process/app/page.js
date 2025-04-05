@@ -45,10 +45,10 @@ export default function Home() {
       <main className="w-11/12 md:w-4/5 mx-auto p-4 md:p-6 mt-6 mb-12 space-y-12">
         {/* Introduction Section */}
         <section id="introduction" className="group">
-          {/* ... Introduction content ... */}
+          {/*Introduction content*/}
           <div className="bg-gray-800/80 hover:bg-gray-800/90 transition-all p-6 rounded-2xl shadow-lg border border-gray-700">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-100 mb-4 tracking-tight">
-              Sulfuric Acid - The King of Chemicals!
+              Sulfuric Acid: A Fundamental Industrial Chemical
             </h2>
             <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
               <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
@@ -82,13 +82,14 @@ export default function Home() {
                   <p className="text-gray-300 leading-relaxed">
                     The first step to the production of sulfuric acid is to
                     create the sulfur dioxide (SO₂) from the sulfur (S) and
-                    oxygen (O) gases. Sulfur is a common chemical, produced from
-                    a variety of other industrial processes as a waste product.
-                    Oxygen is just as common and can be produced from many
-                    sources. Together, they are the building blocks of the
+                    oxygen (O₂) gases. Sulfur is a common chemical, produced
+                    from a variety of other industrial processes as a waste
+                    product. Oxygen is just as common and can be produced from
+                    many sources. Together, they are the building blocks of the
                     industrial production of sulfuric acid. This reaction is not
-                    reversible, so its easy for industrial chemists to control.
-                    The balanced chemical equation for this equilibrium is:
+                    reversible, so its relatively straightforward for industrial
+                    chemists to control. The balanced chemical equation for this
+                    equilibrium is:
                   </p>
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
                     <BlockMath
@@ -107,7 +108,6 @@ export default function Home() {
                     equilibrium position. The balanced chemical equation for
                     this equilibrium is:
                   </p>
-                  {/* Add the BlockMath component here */}
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
                     <BlockMath
                       math={
@@ -151,7 +151,7 @@ export default function Home() {
                     />
                     <BlockMath
                       math={
-                        "H_2S_2O_{7(\\text{l})} + H_2O_{(\\text{l})} \\rightarrow 2H_2SO_{(\\text{l})}"
+                        "H_2S_2O_{7(\\text{l})} + H_2O_{(\\text{l})} \\rightarrow 2H_2SO_{4(\\text{l})}"
                       }
                     />
                   </div>
@@ -159,10 +159,8 @@ export default function Home() {
                     Finally, we are left with our desired sulfuric acid!
                   </p>
                 </div>
-                {/* --- End Modified Section --- */}
               </div>
               <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-                {/* ... Rest of the "Role of Equilibrium" section ... */}
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
                   The Role of Equilibrium
                 </h3>
@@ -199,7 +197,6 @@ export default function Home() {
 
               {/* Le Châtelier's Principle Section */}
               <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-                {/* ... Le Chatelier content ... */}
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
                   How Equilibrium Affects the Process: Le Châtelier's Principle
                 </h3>
@@ -250,7 +247,6 @@ export default function Home() {
 
               {/* Catalyst Section */}
               <div className="bg-gray-900/80 p-5 md:p-6 rounded-xl border border-gray-700">
-                {/* ... Catalyst content ... */}
                 <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-4 tracking-tight">
                   Catalyst Usage
                 </h3>
@@ -269,16 +265,18 @@ export default function Home() {
             </div>
             <p className="text-gray-300 leading-relaxed mt-2">
               Check out the simulation to visually see how changing the
-              conditions of the reaction affect the equilibrium! Note that the
-              simulation is mostly qualitative, and doesn't fully represent the
-              real-world equilibrium conditions (approx Keq and rates).
+              conditions of the reaction affect the equilibrium! Play around
+              with the sliders and check out various views of the reaction. Drag
+              the canvas to orbit around, and scroll to zoom in and out. Note
+              that the simulation is mostly qualitative, and doesn't fully
+              represent the real-world equilibrium conditions (approx Keq and
+              rates).
             </p>
           </div>
         </section>
       </main>
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-400 text-center p-4 text-sm">
-        {/* Your footer content */}
         <p>Sean Zhao & Alex Zhu | Contact Process Simulation</p>
       </footer>
     </div>

@@ -24,7 +24,7 @@ const generateId = () => nextParticleId++;
 // Helper for random velocity generation with minimum magnitude
 const randomVelocity = (scale) => {
   let vx, vy, vz, magSq;
-  const minMagSq = (scale * 0.1) ** 2; // Ensure velocity isn't near zero
+  const minMagSq = (scale * 0.1) ** 2;
   do {
     vx = (Math.random() - 0.5) * scale;
     vy = (Math.random() - 0.5) * scale;
@@ -83,7 +83,7 @@ const adjustParticleCount = (get, set, type, targetCount) => {
 
 // Create the Zustand store
 export const useSimulationStore = create((set, get) => ({
-  // --- Initial Settings ---
+  //  Initial Settings 
   initialSO2: 50,
   initialO2: 25,
   initialSO3: 10,
@@ -91,14 +91,14 @@ export const useSimulationStore = create((set, get) => ({
   pressureFactor: 1.0,
   catalystActive: false,
 
-  // --- Simulation Runtime State ---
+  //  Simulation Runtime State 
   particles: [],
   isRunning: false,
   equilibriumReached: false,
   countsHistory: [],
   effectiveBoxSize: BASE_BOX_SIZE / 1.0, // Initial calculation
 
-  // --- Actions ---
+  //  Actions 
   setInitialSO2: (n) => {
     set({ initialSO2: n });
     if (!get().isRunning) {

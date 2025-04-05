@@ -17,23 +17,20 @@ const REACTION_DISTANCE_REV_SQ = 0.6 ** 2;
 const TEMP_REF_K = 450.0 + 273.15;
 const CATALYST_FACTOR = 10.0;
 
-// --- Equilibrium Check TUNABLES ---
-const MIN_EQ_CHECK_FRAMES = 250; // Increased: Wait longer before starting checks
-const REQUIRED_EQ_HISTORY_LEN = 300; // Check stability over this many frames (Keep at 300)
-const EQ_REL_FLUCTUATION_THRESHOLD = 0.25; // Allow 25% relative fluctuation (Increased further)
-const EQ_ABS_STDDEV_THRESHOLD = 15.0; // Allow stability if absolute std dev is below this (Increased significantly)
-// ----------------------------------
+const MIN_EQ_CHECK_FRAMES = 250;
+const REQUIRED_EQ_HISTORY_LEN = 300;
+const EQ_REL_FLUCTUATION_THRESHOLD = 0.25;
+const EQ_ABS_STDDEV_THRESHOLD = 15.0
 
-// --- Reaction Dynamics TUNABLES ---
+// Reaction Variables
 const BASE_REACTION_PROBABILITY = 0.04; // Base chance of reaction if conditions met
 const REACTION_SPAWN_OFFSET_SCALE = 0.3; // How far apart products spawn
 const REACTION_VELOCITY_KICK_SCALE = 0.25; // How fast products fly apart
-// ----------------------------------
 
 export default function ParticleSystem() {
   // Zustand state/actions
   const particles = useSimulationStore((state) => state.particles);
-  const isRunning = useSimulationStore((state) => state.isRunning); // Subscribe for effect
+  const isRunning = useSimulationStore((state) => state.isRunning);
   const addParticle = useSimulationStore((state) => state.addParticle);
   const removeParticlesByIds = useSimulationStore(
     (state) => state.removeParticlesByIds
@@ -51,7 +48,7 @@ export default function ParticleSystem() {
   const frameCount = useRef(0);
   const { invalidate } = useThree();
 
-  // Memoized THREE objects
+  // THREE objects
   const sphereGeometry = useMemo(
     () => new THREE.SphereGeometry(PARTICLE_RADIUS, 8, 8),
     []
@@ -89,7 +86,7 @@ export default function ParticleSystem() {
     invalidate();
   }, [particles, invalidate]);
 
-  // Effect: Reset frame count, invalidate on isRunning change
+  // Reset frame count, invalidate on isRunning change
   useEffect(() => {
     if (!isRunning) {
       frameCount.current = 0;
@@ -99,7 +96,7 @@ export default function ParticleSystem() {
     }
   }, [isRunning, invalidate]);
 
-  // --- Simulation Loop ---
+  // Simulation Loop
   useFrame((state, delta) => {
     const running = useSimulationStore.getState().isRunning;
     if (running) {
@@ -141,7 +138,7 @@ export default function ParticleSystem() {
     const particlesToRemove = new Set();
     const particlesToAdd = [];
 
-    // --- 1. Movement ---
+    //  1. Movement 
     currentParticles.forEach((p) => {
       if (particlesToRemove.has(p.id)) return;
       const effectiveVel = [
@@ -169,7 +166,7 @@ export default function ParticleSystem() {
       }
     });
 
-    // --- 2. Reactions ---
+    //  2. Reactions 
     const updatedParticles = useSimulationStore.getState().particles;
     let potentialSO2 = updatedParticles.filter(
       (p) => p.type === PARTICLE_TYPES.SO2 && !particlesToRemove.has(p.id)
@@ -275,7 +272,7 @@ export default function ParticleSystem() {
       }
     }
 
-    // --- 3. Apply Reactions ---
+    //  3. Apply Reactions 
     if (particlesToRemove.size > 0) {
       removeParticlesByIds(Array.from(particlesToRemove));
     }
@@ -283,7 +280,7 @@ export default function ParticleSystem() {
       particlesToAdd.forEach((p) => addParticle(p.type, p.pos, p.vel));
     }
 
-    // --- 4. Equilibrium Check (Further Improved Thresholds) ---
+    //  4. Equilibrium Check (Further Improved Thresholds) 
     if (frameCount.current > MIN_EQ_CHECK_FRAMES) {
       const finalParticles = useSimulationStore.getState().particles;
       const currentCounts = finalParticles.reduce(
@@ -294,9 +291,8 @@ export default function ParticleSystem() {
         { SO2: 0, O2: 0, SO3: 0 }
       );
       updateCountsHistory(currentCounts); // Add latest counts
-      const history = useSimulationStore.getState().countsHistory; // Get full history
+      const history = useSimulationStore.getState().countsHistory;
 
-      // Check history length (make sure store updates didn't shorten it unexpectedly)
       if (history.length >= REQUIRED_EQ_HISTORY_LEN) {
         let isStable = true;
         const recentHistory = history.slice(-REQUIRED_EQ_HISTORY_LEN); // Use exactly the required length
@@ -316,34 +312,24 @@ export default function ParticleSystem() {
           );
           const relativeChange = stdDev / avgCount;
 
-          // Log values for debugging if needed
-          // if (frameCount.current % 60 === 0) { // Log occasionally
-          //   console.log(`EQ Check - Type: ${type}, Avg: ${avgCount.toFixed(1)}, StdDev: ${stdDev.toFixed(2)}, RelChg: ${relativeChange.toFixed(3)}`);
-          // }
-
-          // Check BOTH thresholds: Instability requires significant relative AND absolute fluctuation
           if (
             relativeChange > EQ_REL_FLUCTUATION_THRESHOLD &&
             stdDev > EQ_ABS_STDDEV_THRESHOLD
           ) {
             isStable = false;
-            // if (frameCount.current % 60 === 0) { console.log(`  -> INSTABILITY DETECTED for ${type}`); }
             break;
           }
         }
-        // if (frameCount.current % 60 === 0) { console.log(`--- Stability Decision: ${isStable} ---`); }
         setEquilibriumReached(isStable);
       } else {
-        // if (frameCount.current % 60 === 0) { console.log(` History not long enough (${history.length}/${REQUIRED_EQ_HISTORY_LEN})`); }
         setEquilibriumReached(false); // Not enough history yet
       }
     } else {
-      // if (frameCount.current % 60 === 0) { console.log(` Min frames not reached (${frameCount.current}/${MIN_EQ_CHECK_FRAMES})`); }
       setEquilibriumReached(false); // Simulation hasn't run long enough
     }
-  }); // End useFrame
+  });
 
-  // --- Rendering ---
+  //  Rendering 
   return (
     <>
       {particles.map((p) => (
@@ -362,7 +348,7 @@ export default function ParticleSystem() {
   );
 }
 
-// --- Helper Functions ---
+//  Helper Functions 
 function distanceSq(p1, p2) {
   const dx = p1[0] - p2[0];
   const dy = p1[1] - p2[1];
