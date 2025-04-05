@@ -82,10 +82,10 @@ export default function Home() {
                   <p className="text-gray-300 leading-relaxed">
                     The first step to the production of sulfuric acid is to
                     create the sulfur dioxide (SO₂) from the sulfur (S) and
-                    oxygen (O) gases. Sulfur is a common chemical, produced
-                    from a variety of other industrial processes as a waste
-                    product. Oxygen is just as common and can be produced from
-                    many sources. Together, they are the building blocks of the
+                    oxygen (O) gases. Sulfur is a common chemical, produced from
+                    a variety of other industrial processes as a waste product.
+                    Oxygen is just as common and can be produced from many
+                    sources. Together, they are the building blocks of the
                     industrial production of sulfuric acid. This reaction is not
                     reversible, so its easy for industrial chemists to control.
                     The balanced chemical equation for this equilibrium is:
@@ -98,8 +98,8 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-gray-300 leading-relaxed">
-                    Now, using the sulfur dioxide previously synthesized, it
-                    can be reacted with additional oxygen gas to produce sulfur
+                    Now, using the sulfur dioxide previously synthesized, it can
+                    be reacted with additional oxygen gas to produce sulfur
                     trioxide (SO₃). This step is also known as the Contact
                     Process, and is a very important step in the production,
                     since unlike the first step, this step is reversible, so
@@ -176,8 +176,9 @@ export default function Home() {
                       of sulfur trioxide from sulfur dioxide and oxygen gas is
                       the critical, rate-limiting equilibrium step that
                       determines the overall efficiency. Once SO₃ is formed, it
-                      readily reacts with water (usually via absorption in
-                      existing H₂SO₄) to produce the final product.
+                      readily reacts with sulfuric to form oleum, which then is
+                      converted back into more sulfuric acid to produce the
+                      final product.
                     </p>
                   </div>
                   <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
@@ -258,14 +259,20 @@ export default function Home() {
                     While catalysts do not affect the position of equilibrium
                     (the final yield percentages at equilibrium), they
                     dramatically increase the rate at which equilibrium is
-                    reached. Without a catalyst, the SO₂ oxidation is far too
-                    slow to be economical. Vanadium(V) oxide (V₂O₅) is the
+                    reached. Without a catalyst, the reaction is far too slow to
+                    be economically viable. Vanadium(V) oxide (V₂O₅) is the
                     standard catalyst used in the Contact Process, allowing the
                     reaction to proceed quickly at the compromise temperature.
                   </p>
                 </div>
               </div>
             </div>
+            <p className="text-gray-300 leading-relaxed mt-2">
+              Check out the simulation to visually see how changing the
+              conditions of the reaction affect the equilibrium! Note that the
+              simulation is mostly qualitative, and doesn't fully represent the
+              real-world equilibrium conditions (approx Keq and rates).
+            </p>
           </div>
         </section>
       </main>
