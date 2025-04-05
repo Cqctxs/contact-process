@@ -80,7 +80,15 @@ export default function Home() {
                 </h3>
                 <div className="bg-gray-800 p-4 rounded-lg border-l-2 border-indigo-500">
                   <p className="text-gray-300 leading-relaxed">
-                    The first step to the production of sulfuric acid is to create the sulphur dioxide (SO₂) from the sulfur (S) and oxygen (O) gases. Sulphur is a common chemical, produced from a variety of other industrial processes as a waste product. Oxygen is just as common and can be produced from many sources. Together, they are the building blocks of the industrial production of sulfuric acid. This reaction is not reversible, so its easy for industrial chemists to control. The balanced chemical equation for this equilibrium is:
+                    The first step to the production of sulfuric acid is to
+                    create the sulphur dioxide (SO₂) from the sulfur (S) and
+                    oxygen (O) gases. Sulphur is a common chemical, produced
+                    from a variety of other industrial processes as a waste
+                    product. Oxygen is just as common and can be produced from
+                    many sources. Together, they are the building blocks of the
+                    industrial production of sulfuric acid. This reaction is not
+                    reversible, so its easy for industrial chemists to control.
+                    The balanced chemical equation for this equilibrium is:
                   </p>
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
                     <BlockMath
@@ -90,7 +98,14 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-gray-300 leading-relaxed">
-                    Now, using the sulphur dioxide previously synthesized, it can be reacted with additional oxygen gas to produce sulphur trioxide (SO₃). This step is also known as the Contact Process, and is a very important step in the production, since unlike the first step, this step is reversible, so multiple factors must be controlled to maintain optimal equilibrium position. The balanced chemical equation for this equilibrium is:
+                    Now, using the sulphur dioxide previously synthesized, it
+                    can be reacted with additional oxygen gas to produce sulphur
+                    trioxide (SO₃). This step is also known as the Contact
+                    Process, and is a very important step in the production,
+                    since unlike the first step, this step is reversible, so
+                    multiple factors must be controlled to maintain optimal
+                    equilibrium position. The balanced chemical equation for
+                    this equilibrium is:
                   </p>
                   {/* Add the BlockMath component here */}
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
@@ -111,13 +126,8 @@ export default function Home() {
                     The final step of the reaction is the process of reacting
                     water with the sulphur trioxide to produce sulfuric acid.
                     This reaction has an extremely high rate of reaction and is
-                    also exothermic. This makes this reaction spontaneous, and
-                    complete on its own. In fact, this reaction is so reactive
-                    that the sulphur trioxide must be first dissolved into
-                    sulphuric acid to produce a solution called oleum. Then,
-                    water can be added to produce a much more controllable
-                    reaction. The balanced chemical equation for this
-                    equilibrium is:
+                    very exothermic, releasing an extreme amount of energy. Due
+                    to this, the reaction ends up being highly dangerous.
                   </p>
                   <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
                     <BlockMath
@@ -126,6 +136,28 @@ export default function Home() {
                       }
                     />
                   </div>
+                  <p className="text-gray-300 leading-relaxed mt-2">
+                    In the industrial production process, sulfur trioxide is
+                    added to concentrated sulfuric acid to form a liquid called
+                    oleum. Then, water can be added to produce the sulfuric
+                    acid, in a much more controllable reaction. The balanced
+                    chemical equation for this equilibrium is:
+                  </p>
+                  <div className="my-4 text-center text-lg bg-gray-900/50 py-3 rounded-md">
+                    <BlockMath
+                      math={
+                        "SO_{3(\\text{g})} + H_2SO_{4(\\text{l})} \\rightarrow H_2S_2O_{7(\\text{l})}"
+                      }
+                    />
+                    <BlockMath
+                      math={
+                        "H_2S_2O_{7(\\text{l})} + H_2O_{(\\text{l})} \\rightarrow 2H_2SO_{(\\text{l})}"
+                      }
+                    />
+                  </div>
+                  <p className="text-gray-300 leading-relaxed mt-2">
+                    Finally, we are left with our desired sulfuric acid!
+                  </p>
                 </div>
                 {/* --- End Modified Section --- */}
               </div>
@@ -240,7 +272,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-400 text-center p-4 text-sm">
         {/* Your footer content */}
-        <p>Sean Zhao | Contact Process Simulation</p>
+        <p>Sean Zhao & Alex Zhu | Contact Process Simulation</p>
       </footer>
     </div>
   );
